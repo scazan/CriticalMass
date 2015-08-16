@@ -15,9 +15,13 @@ Quarks.gui;
 ```
 
 Then click on "Update Quark Listing."
+
 Scroll down to find "NetLib" in the list.
+
 If you already have the library then it will appear as a green "+" in which case you don't need to do anything more.
+
 If you do not see a green "+" next to "NetLib" then click the "-" icon to the left of it (it will turn into a star).
+
 Lastly, click "Apply" at the top, close the window and then exit SuperCollider.
 
 ## Getting the Code
