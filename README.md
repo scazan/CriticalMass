@@ -1,5 +1,4 @@
 # Critical Mass
----------------
 
 This is the code and score for the piece Critical Mass, a work for networked laptop ensemble.
 
