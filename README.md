@@ -1,7 +1,7 @@
 # Critical Mass
 ---------------
 
-This is the code and score for the piece Critical Mass.
+This is the code and score for the piece Critical Mass, a work for networked laptop ensemble.
 
 ##Requirements
 The code is written for SuperCollider 3 and has been tested on SuperCollider 3.7.
