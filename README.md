@@ -5,9 +5,9 @@ This is the code and score for the piece Critical Mass.
 
 ##Requirements
 The code is written for SuperCollider 3 and has been tested on SuperCollider 3.7.
-You can obtain that at [http://supercollider.github.io/](the SuperCollider website)
+You can obtain that at [the SuperCollider website](http://supercollider.github.io/)
 
-In addition this patch requires one external library, [https://github.com/supercollider-quarks/NetLib](the NetLib quark).
+In addition this patch requires one external library, [the NetLib quark](https://github.com/supercollider-quarks/NetLib).
 
 The easiest way to install the NetLib quark is to open SuperCollider and then run this command:
 ```
