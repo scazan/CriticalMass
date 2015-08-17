@@ -26,7 +26,7 @@ s.waitForBoot({
 		GrayNoise.ar()!2 * 0.02;
 	}.play,
 	distortionSynth = { |freq=820, amp=0|
-		BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * amp;
+		BPF.ar((GrayNoise.ar * 7).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5)!2 * amp;
 	}.play;
 
 	listener = {
