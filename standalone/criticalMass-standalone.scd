@@ -15,18 +15,18 @@ s.waitForBoot({
 		},
 		{
 			SinOsc.ar(detectedFreq * Rand(variance, 1), 2)!2
-			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * volume;
+			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * ( volume/4 );
 		},
 		{
 			Blip.ar(detectedFreq * Rand(variance, 1), 2)!2
-			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * volume;
+			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * ( volume/4 );
 		}
 	],
 	backgroundNoise = { |amp=0|
 		GrayNoise.ar()!2 * 0.02;
 	}.play,
 	distortionSynth = { |freq=820, amp=0|
-		BPF.ar((GrayNoise.ar * 7).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5)!2 * amp;
+		BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * amp;
 	}.play;
 
 	listener = {
@@ -42,9 +42,6 @@ s.waitForBoot({
 
 		if(hasFreq > 0 && (variance < 1), {
 			detectedFreq = freq;
-			triggerButton.states_([
-				[freq, Color.white, Color.new255(0,180,255)]
-			]);
 			distortionSynth.set(\freq, freq);
 
 		});
