@@ -2,7 +2,6 @@
 // by Scott Cazan
 // www.scottcazan.com
 
-s.meter;
 s.waitForBoot({
 	var w, f, volumeSlider, varianceKnob, color, triggerButton, triggerTone, soundSelectMenu;
 	var listener, detectedFreq = 820, variance = 0, currentSection = 0, volume = 0, distortion = 1,
