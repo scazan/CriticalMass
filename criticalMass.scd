@@ -2,6 +2,7 @@
 // by Scott Cazan
 // www.scottcazan.com
 
+s.meter;
 s.waitForBoot({
 	var w, f, volumeSlider, varianceKnob, color, triggerButton, triggerTone, soundSelectMenu;
 	var listener, detectedFreq = 820, variance = 0, currentSection = 0, volume = 0, distortion = 1,
@@ -15,11 +16,11 @@ s.waitForBoot({
 		},
 		{
 			SinOsc.ar(detectedFreq * Rand(variance, 1), 2)!2
-			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * volume;
+			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * ( volume/4 );
 		},
 		{
 			Blip.ar(detectedFreq * Rand(variance, 1), 2)!2
-			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * volume;
+			* EnvGen.ar(Env([0,1,0],[0.1, 4]), doneAction: 2) * ( volume/4 );
 		}
 	],
 	backgroundNoise = { |amp=0|
@@ -42,9 +43,6 @@ s.waitForBoot({
 
 		if(hasFreq > 0 && (variance < 1), {
 			detectedFreq = freq;
-			triggerButton.states_([
-				[freq, Color.white, Color.new255(0,180,255)]
-			]);
 			distortionSynth.set(\freq, freq);
 
 		});
