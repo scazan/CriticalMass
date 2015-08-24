@@ -5,7 +5,7 @@
 s.waitForBoot({
 	var w, f, volumeSlider, varianceKnob, color, triggerButton, triggerTone, soundSelectMenu;
 	var listener, detectedFreq = 820, variance = 0, currentSection = 0, volume = 0, distortion = 1,
-		flop = true, varianceText, soundSelectText, volumeText, blocked = false;
+		flop = true, maxVarianceText, minVarianceText, soundSelectText, volumeText, blocked = false;
 
 	var sounds = [
 		{
@@ -140,33 +140,25 @@ s.waitForBoot({
 	varianceKnob.action = {| knob | variance = knob.value };
 	triggerButton.action = triggerTone;
 
-	// Keyboard actions
-	//w.view.keyDownAction = { | view, char, modifiers, unicode, keyCode, key |
-		//key.postln;
-		//char.postln; unicode.postln;
-
-		//// If Esc, then close
-		//if(key == 16777216, w.close);
-
-		//if(key == 32, triggerButton.action);
-
-		//^false;
-	//};
-
 	// Labels
-	varianceText = StaticText(w, Rect(varianceKnob.absoluteBounds.top, varianceKnob.absoluteBounds.left, 100, 50) );
-	varianceText.string = "variance";
-	varianceText.stringColor = color;
-	varianceText.moveTo(w.view.bounds.width/2, (w.view.bounds.height/2) + 325);
+	maxVarianceText = StaticText(w, Rect(varianceKnob.absoluteBounds.top, varianceKnob.absoluteBounds.left, 100, 50) );
+	maxVarianceText.string = "Maximum\nvariance";
+	maxVarianceText.stringColor = Color.new(1,1,1,1);
+	maxVarianceText.moveTo(w.view.bounds.width/2 + 10, (w.view.bounds.height/2) + 280);
+
+	minVarianceText = StaticText(w, Rect(varianceKnob.absoluteBounds.top, varianceKnob.absoluteBounds.left, 100, 50) );
+	minVarianceText.string = "Minimum\nvariance";
+	minVarianceText.stringColor = Color.new(1,1,1,1);
+	minVarianceText.moveTo(w.view.bounds.width/2 + 230, (w.view.bounds.height/2) + 280);
 
 	soundSelectText = StaticText(w, Rect(varianceKnob.absoluteBounds.top, varianceKnob.absoluteBounds.left, 100, 50) );
 	soundSelectText.string = "sound";
-	soundSelectText.stringColor = color;
+	soundSelectText.stringColor = Color.new(1,1,1,1);
 	soundSelectText.moveTo((w.view.bounds.width/2)+700, (w.view.bounds.height/2) + 325);
 
 	volumeText = StaticText(w, Rect(volumeSlider.absoluteBounds.top, volumeSlider.absoluteBounds.left, 100, 50) );
 	volumeText.string = "volume";
-	volumeText.stringColor = color;
+	volumeText.stringColor = Color.new(1,1,1,1);
 	volumeText.moveTo((w.view.bounds.width/2), (w.view.bounds.height/2) + 505);
 
 	w.onClose_({ listener.free; backgroundNoise.free; OSCdef(\frequencyReceiver).free; OSCdef(\blockReceiver).free; distortionSynth.free;
