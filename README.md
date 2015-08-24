@@ -41,7 +41,7 @@ To start the patch without having to load anything else just type this at the co
 ```
 ./start.sh
 ```
-You will also need to start the Conductor's patch:
+You can also start the Conductor's patch in this way:
 ```
 ./startConductor.sh
 ```
