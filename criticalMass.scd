@@ -163,5 +163,52 @@ s.waitForBoot({
 
 	w.onClose_({ listener.free; backgroundNoise.free; OSCdef(\frequencyReceiver).free; OSCdef(\blockReceiver).free; distortionSynth.free; });
 
+
+	// MIDI
+	MIDIClient.init;
+	MIDIIn.connectAll;
+
+
+	CCResponder({ |src, chan, num, val|
+		val = val / 127;
+
+		switch (num,
+			// AMP
+			1, {
+				AppClock.sched(0, {
+					volumeSlider.valueAction = val;
+				});
+			},
+			// Variance
+			11, {
+				AppClock.sched(0, {
+					varianceKnob.valueAction = val;
+				});
+			},
+			// Trigger
+			21, {
+				AppClock.sched(0, {
+					triggerButton.valueAction = val;
+				});
+			},
+			// Selection of Sounds
+			22, {
+				AppClock.sched(0, {
+					soundSelectMenu.valueAction = 0;
+				});
+			},
+			49, {
+				AppClock.sched(0, {
+					soundSelectMenu.valueAction = 1;
+				});
+			},
+			32, {
+				AppClock.sched(0, {
+					soundSelectMenu.valueAction = 2;
+				});
+			}
+		)
+	});
+
 });
 
