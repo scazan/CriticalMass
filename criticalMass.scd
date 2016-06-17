@@ -26,7 +26,7 @@ s.waitForBoot({
 		GrayNoise.ar()!2 * 0.002;
 	}.play,
 	distortionSynth = { |freq=820, amp=0|
-		BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * ( amp * 2 );
+		Out.ar(1, BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * ( amp * 2 ) );
 	}.play;
 
 	listener = {
@@ -41,8 +41,13 @@ s.waitForBoot({
 			hasFreq = msg[4];
 
 		if(hasFreq > 0 && (variance < 1), {
+			var multiplier = [1, 1.5].choose;
 			detectedFreq = freq;
-			distortionSynth.set(\freq, freq);
+			if(detectedFreq < 60, {
+				detectedFreq = detectedFreq * 3;
+			});
+
+			distortionSynth.set(\freq, freq * multiplier);
 
 		});
 	}, '/detectedFreq');
@@ -93,12 +98,12 @@ s.waitForBoot({
 	};
 
 	// GUI
-	w = Window.new("Critical Mass");
+	w = Window.new("Critical Mass", 1024@768);
 	w.background = Color.black;
 	w.front;
-	w.fullScreen;
+	//w.fullScreen;
 
-	f = FlowView.new(w, 800@700, gap: Point(50, 50) );
+	f = FlowView.new(w, 1024@768, gap: Point(50, 50) );
 	f.moveTo(w.view.bounds.width/2, w.view.bounds.height/2);
 
 	color = Color.new255(0,180,255);
@@ -199,12 +204,12 @@ s.waitForBoot({
 					soundSelectMenu.valueAction = 0;
 				});
 			},
-			49, {
+			23, {
 				AppClock.sched(0, {
 					soundSelectMenu.valueAction = 1;
 				});
 			},
-			32, {
+			24, {
 				AppClock.sched(0, {
 					soundSelectMenu.valueAction = 2;
 				});
