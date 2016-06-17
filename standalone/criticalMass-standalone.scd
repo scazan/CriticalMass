@@ -23,10 +23,10 @@ s.waitForBoot({
 		}
 	],
 	backgroundNoise = { |amp=0|
-		GrayNoise.ar()!2 * 0.02;
+		GrayNoise.ar()!2 * 0.002;
 	}.play,
 	distortionSynth = { |freq=820, amp=0|
-		BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * amp;
+		BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * ( amp * 2 );
 	}.play;
 
 	listener = {
@@ -164,6 +164,54 @@ s.waitForBoot({
 	w.onClose_({ listener.free; backgroundNoise.free; OSCdef(\frequencyReceiver).free; OSCdef(\blockReceiver).free; distortionSynth.free;
 		s.quit;
 		0.exit;
+	});
+
+	// MIDI
+	MIDIClient.init;
+	MIDIIn.connectAll;
+
+
+	CCResponder({ |src, chan, num, val|
+		val = val / 127;
+
+		switch (num,
+			// AMP
+			1, {
+				AppClock.sched(0, {
+					volumeSlider.valueAction = val;
+				});
+			},
+			// Variance
+			11, {
+				AppClock.sched(0, {
+					varianceKnob.valueAction = val;
+				});
+			},
+			// Trigger
+			21, {
+				if(val == 0, {
+					AppClock.sched(0, {
+						triggerButton.valueAction = val;
+					});
+				});
+			},
+			// Selection of Sounds
+			22, {
+				AppClock.sched(0, {
+					soundSelectMenu.valueAction = 0;
+				});
+			},
+			49, {
+				AppClock.sched(0, {
+					soundSelectMenu.valueAction = 1;
+				});
+			},
+			32, {
+				AppClock.sched(0, {
+					soundSelectMenu.valueAction = 2;
+				});
+			}
+		)
 	});
 
 });

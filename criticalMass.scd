@@ -23,10 +23,10 @@ s.waitForBoot({
 		}
 	],
 	backgroundNoise = { |amp=0|
-		GrayNoise.ar()!2 * 0.02;
+		GrayNoise.ar()!2 * 0.002;
 	}.play,
 	distortionSynth = { |freq=820, amp=0|
-		BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * amp;
+		BPF.ar((GrayNoise.ar * 9).wrap2, freq, 0.01, mul: 12).clip(-0.5,0.5) * ( amp * 2 );
 	}.play;
 
 	listener = {
@@ -187,8 +187,10 @@ s.waitForBoot({
 			},
 			// Trigger
 			21, {
-				AppClock.sched(0, {
-					triggerButton.valueAction = val;
+				if(val == 0, {
+					AppClock.sched(0, {
+						triggerButton.valueAction = val;
+					});
 				});
 			},
 			// Selection of Sounds
